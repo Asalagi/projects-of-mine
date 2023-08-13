@@ -5,7 +5,7 @@ const pool = new Pool({
     database: 'my_database',
     password: 'root',
     port: 5432,
-//^ wording not reccommended for production, just using for testinf and tutorial
+//^ wording not reccommended for production, just using for testing and tutorial
 });
 
 const getMerchants = () => {
