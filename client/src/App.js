@@ -1,42 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { getMembers, createMember, deleteMember } from '../../models/member.js'; // ensure this path is correct
+import axios from 'axios';
 
 const App = () => {
   const [members, setMembers] = useState([]);
 
-  // Fetch members when the component mounts
   useEffect(() => {
     fetchMembers();
   }, []);
 
   const fetchMembers = () => {
-    getMembers()
-      .then(result => {
-        if (Array.isArray(result)) {
-          setMembers(result);
+    axios.get('http://localhost:3001/')
+      .then(response => {
+        if (Array.isArray(response.data)) {
+          setMembers(response.data);
         } else {
-          console.error('getMembers did not return an array');
+          console.error('The server response was not an array');
         }
       })
       .catch(error => console.error(`There was an error fetching members: ${error}`));
   };
 
   const handleCreate = (newMember) => {
-    createMember(newMember)
+    axios.post('http://localhost:3001/member', newMember)
       .then(response => {
         console.log(response);
-        fetchMembers(); // refetch members to update the UI
+        fetchMembers();
       })
-      .catch(error => console.error(`There was an error creating member: ${error}`));
+      .catch(error => console.error(`There was an error creating the member: ${error}`));
   };
 
   const handleDelete = (id) => {
-    deleteMember(id)
+    axios.delete(`http://localhost:3001/member/${id}`)
       .then(response => {
         console.log(response);
-        fetchMembers(); // refetch members to update the UI
+        fetchMembers();
       })
-      .catch(error => console.error(`There was an error deleting member: ${error}`));
+      .catch(error => console.error(`There was an error deleting the member: ${error}`));
   };
 
   return (
