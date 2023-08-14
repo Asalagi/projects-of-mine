@@ -1,56 +1,67 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { getMembers, createMember, deleteMember } from '../../models/member.js'; // ensure this path is correct
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchId: '',
-      searchData: null,
-    };
-  }
+const App = () => {
+  const [members, setMembers] = useState([]);
 
-  handleInputChange = event => {
-    this.setState({ searchId: event.target.value });
-  };
+  // Fetch members when the component mounts
+  useEffect(() => {
+    fetchMembers();
+  }, []);
 
-  handleSearch = () => {
-    const API_URL = 'http://localhost:3001'; // Change to your server URL
-    const { searchId } = this.state;
-
-    axios.get(`${API_URL}/api/data/${searchId}`)
-      .then(response => {
-        console.log(response.data);
-        this.setState({ searchData: response.data });
+  const fetchMembers = () => {
+    getMembers()
+      .then(result => {
+        if (Array.isArray(result)) {
+          setMembers(result);
+        } else {
+          console.error('getMembers did not return an array');
+        }
       })
-      .catch(error => {
-        console.error('Error fetching data by ID', error);
-      });
+      .catch(error => console.error(`There was an error fetching members: ${error}`));
   };
 
-  render() {
-    const { searchId, searchData } = this.state;
+  const handleCreate = (newMember) => {
+    createMember(newMember)
+      .then(response => {
+        console.log(response);
+        fetchMembers(); // refetch members to update the UI
+      })
+      .catch(error => console.error(`There was an error creating member: ${error}`));
+  };
 
-    return (
-      <div className="App">
-        <h1>Search Data by ID</h1>
-        <input
-          type="text"
-          placeholder="Enter ID"
-          value={searchId}
-          onChange={this.handleInputChange}
-        />
-        <button onClick={this.handleSearch}>Search</button>
+  const handleDelete = (id) => {
+    deleteMember(id)
+      .then(response => {
+        console.log(response);
+        fetchMembers(); // refetch members to update the UI
+      })
+      .catch(error => console.error(`There was an error deleting member: ${error}`));
+  };
 
-        {searchData && (
-          <div>
-            <h2>Search Result</h2>
-            <pre>{JSON.stringify(searchData, null, 2)}</pre>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {members.map(member => (
+        <div key={member.id}>
+          <h2>{member.username}</h2>
+          <button onClick={() => handleDelete(member.id)}>Delete</button>
+        </div>
+      ))}
+      <form onSubmit={e => {
+        e.preventDefault();
+        handleCreate({ 
+          username: e.target.elements.username.value, 
+          password: e.target.elements.password.value, 
+          email: e.target.elements.email.value
+        });
+      }}>
+        <input name="username" placeholder="username" required />
+        <input name="password" placeholder="password" required />
+        <input name="email" placeholder="email" required />
+        <button type="submit">Create new member</button>
+      </form>
+    </div>
+  );
+};
 
 export default App;
