@@ -42,11 +42,19 @@ const createMember = (body) => {
 
 const updateMember = (id, updatedMember) => {
   const { username, password, email } = updatedMember;
-  
-  return pool.query(
-    'UPDATE members SET username = $1, password = $2, email = $3 WHERE id = $4 RETURNING *',
-    [username, password, email, id]
-  );
+
+  let query;
+  let values;
+
+  if (password) {
+      query = 'UPDATE member SET username = $1, password = $2, email = $3 WHERE id = $4 RETURNING *';
+      values = [username, password, email, id];
+  } else {
+      query = 'UPDATE member SET username = $1, email = $2 WHERE id = $3 RETURNING *';
+      values = [username, email, id];
+  }
+
+  return pool.query(query, values);
 };
 
 const deleteMember = (id) => {
