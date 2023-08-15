@@ -17,6 +17,20 @@ body {
     border-radius: 10px;
     width: 50%;
   }
+  
+  .input-text {
+    width: 150px;
+    padding:10px;
+    margin: 5px;
+  }
+
+  .btn-center-submit {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: rgb(52, 200, 52);
+    margin: 5px
+  }
 
   .member-box {
     background-color: #ffffff;
@@ -30,18 +44,24 @@ body {
     border-radius: 10px;
     width: 75%;
   }
-  
-  .input-text {
-    width: 150px;
-    padding:10px;
-    margin: 5px;
+
+  .member-table {
+    width: 95%;
+    text-align: left;
+    border-collapse: collapse;
   }
 
-  .btn-center-submit {
-    border: 1px solid black;
-    border-radius: 5px;
-    background-color: lightgreen;
-    margin: 5px
+  .member-thead {
+    background-color: #dddddd;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    padding: 8px;
   }
 
   

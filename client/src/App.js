@@ -41,28 +41,44 @@ const App = () => {
 
   return (
     <div>
-    <div class="reg-box">
-      <form onSubmit={e => {
-        e.preventDefault();
-        handleCreate({ 
-          username: e.target.elements.username.value, 
-          password: e.target.elements.password.value, 
-          email: e.target.elements.email.value
-        });
-      }}>
-        <input class="input-text" name="username" placeholder="username" required /><br/>
-        <input class="input-text" name="password" placeholder="password" required /><br/>
-        <input class="input-text" name="email" placeholder="email" required /><br/> 
-        <button class="btn-center-submit" type="submit">Create new member</button>
-      </form>
+      <div className="reg-box">
+        <form onSubmit={e => {
+          e.preventDefault();
+          handleCreate({
+            username: e.target.elements.username.value,
+            password: e.target.elements.password.value,
+            email: e.target.elements.email.value
+          });
+        }}>
+          <input className="input-text" name="username" placeholder="username" required /><br />
+          <input className="input-text" name="password" placeholder="password" required /><br />
+          <input className="input-text" name="email" placeholder="email" required /><br />
+          <button className="btn-center-submit" type="submit">Create new member</button>
+        </form>
       </div>
-      <div class="member-box">
-      {members.map(member => (
-        <div key={member.id}>
-          <p>{member.id} - {member.username} - {member.email} - 
-          <button onClick={() => handleDelete(member.id)}>Delete</button></p>
-        </div>
-      ))}
+      <div className="member-box">
+        <table className="member-table">
+          <thead className="member-thead">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Controls</th>
+            </tr>
+          </thead>
+          <tbody>
+            {members.map(member => (
+              <tr key={member.id}>
+                <td>{member.id}</td>
+                <td>{member.username}</td>
+                <td>{member.email}</td>
+                <td>
+                  <button onClick={() => handleDelete(member.id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
