@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './app-style.css';
 
 const App = () => {
   const [members, setMembers] = useState([]);
@@ -40,12 +41,7 @@ const App = () => {
 
   return (
     <div>
-      {members.map(member => (
-        <div key={member.id}>
-          <h2>{member.username}</h2>
-          <button onClick={() => handleDelete(member.id)}>Delete</button>
-        </div>
-      ))}
+    <div class="reg-box">
       <form onSubmit={e => {
         e.preventDefault();
         handleCreate({ 
@@ -54,11 +50,20 @@ const App = () => {
           email: e.target.elements.email.value
         });
       }}>
-        <input name="username" placeholder="username" required />
-        <input name="password" placeholder="password" required />
-        <input name="email" placeholder="email" required />
-        <button type="submit">Create new member</button>
+        <input class="input-text" name="username" placeholder="username" required /><br/>
+        <input class="input-text" name="password" placeholder="password" required /><br/>
+        <input class="input-text" name="email" placeholder="email" required /><br/> 
+        <button class="btn-center-submit" type="submit">Create new member</button>
       </form>
+      </div>
+      <div class="member-box">
+      {members.map(member => (
+        <div key={member.id}>
+          <p>{member.id} - {member.username} - {member.email} - 
+          <button onClick={() => handleDelete(member.id)}>Delete</button></p>
+        </div>
+      ))}
+      </div>
     </div>
   );
 };

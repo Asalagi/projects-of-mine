@@ -1,0 +1,47 @@
+body {
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+} 
+
+.reg-box {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin: 20px auto;
+    padding:10px; 
+    border: 1px solid black;
+    flex-wrap: wrap; 
+    border-radius: 10px;
+    width: 50%;
+  }
+
+  .member-box {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin: 20px auto;
+    padding:10px; 
+    border: 1px solid black;
+    flex-wrap: wrap; 
+    border-radius: 10px;
+    width: 75%;
+  }
+  
+  .input-text {
+    width: 150px;
+    padding:10px;
+    margin: 5px;
+  }
+
+  .btn-center-submit {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: lightgreen;
+    margin: 5px
+  }
+
+  
