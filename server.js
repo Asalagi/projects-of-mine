@@ -32,6 +32,18 @@ app.post('/member', (req, res) => {
       });
   });
 
+  app.put('/member/:id', (req, res) => {
+    const { id } = req.params;
+    const updatedMember = req.body;
+    
+    member.updateMember(id, updatedMember)
+      .then(result => res.send(result.rows[0]))
+      .catch(error => {
+        console.error(error);
+        res.status(500).send('There was an error updating the member');
+      });
+  });
+
 app.delete('/member/:id', (req, res) => {
   member.deleteMember(req.params.id) 
     .then(response => {

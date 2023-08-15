@@ -4,6 +4,7 @@ import './app-style.css';
 
 const App = () => {
   const [members, setMembers] = useState([]);
+  const [editingMember, setEditingMember] = useState(null);
 
   useEffect(() => {
     fetchMembers();
@@ -28,6 +29,15 @@ const App = () => {
         fetchMembers();
       })
       .catch(error => console.error(`There was an error creating the member: ${error}`));
+  };
+
+  const handleUpdate = (id, updatedMember) => {
+    axios.put(`http://localhost:3001/member/${id}`, updatedMember)
+      .then(response => {
+        console.log(response);
+        fetchMembers();
+      })
+      .catch(error => console.error(`There was an error updating the member: ${error}`));
   };
 
   const handleDelete = (id) => {
@@ -73,12 +83,30 @@ const App = () => {
                 <td>{member.username}</td>
                 <td>{member.email}</td>
                 <td>
-                  <button onClick={() => handleDelete(member.id)}>Delete</button>
+                  <button onClick={() => handleDelete(member.id)}>Delete</button> <button onClick={() => setEditingMember(member)}>Edit</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {editingMember ? (
+    <div className="edit-box">
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      handleUpdate(editingMember.id, {
+        username: e.target.elements.username.value,
+        email: e.target.elements.email.value
+        // Include more fields as necessary
+      });
+      setEditingMember(null); // Reset editing state after update
+    }}>
+      <input className="input-text" name="username" defaultValue={editingMember.username} required /><br />
+      <input className="input-text" name="email" defaultValue={editingMember.email} required /><br />
+      {/* Include more fields as necessary */}
+      <button className="btn-center-submit" type="submit">Update member</button>
+    </form>
+  </div>
+) : null}
       </div>
     </div>
   );

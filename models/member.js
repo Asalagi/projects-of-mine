@@ -40,6 +40,15 @@ const createMember = (body) => {
   });
 };
 
+const updateMember = (id, updatedMember) => {
+  const { username, password, email } = updatedMember;
+  
+  return pool.query(
+    'UPDATE members SET username = $1, password = $2, email = $3 WHERE id = $4 RETURNING *',
+    [username, password, email, id]
+  );
+};
+
 const deleteMember = (id) => {
   return new Promise((resolve, reject) => {
     pool.query('DELETE FROM member WHERE id = $1', [id], (error, results) => {
@@ -55,5 +64,6 @@ const deleteMember = (id) => {
 module.exports = {
   getMembers, 
   createMember,
+  updateMember,
   deleteMember,
 };
