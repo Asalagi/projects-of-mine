@@ -60,11 +60,20 @@ const App = () => {
             email: e.target.elements.email.value
           });
         }}>
+          <h2>Register</h2>
           <input className="input-text" name="username" placeholder="username" required /><br />
           <input className="input-text" name="password" placeholder="password" required /><br />
           <input className="input-text" name="email" placeholder="email" required /><br />
           <button className="btn-center-submit" type="submit">Create new member</button>
         </form>
+      </div>
+      <div className="reg-box">
+       <form>
+        <h2>Login</h2>
+        <input className="input-text" name=" " placeholder="Enter Email" /><br />
+        <input className="input-text" name=" " placeholder="Enter Password" /><br />
+        <button className="btn-center-submit" type="  ">Login</button>
+       </form>
       </div>
       <div className="member-box">
         <table className="member-table">

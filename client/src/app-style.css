@@ -5,6 +5,10 @@ body {
     height: 100%;
 } 
 
+h2 {
+  text-align: center;
+
+}
 .reg-box {
     background-color: #ffffff;
     display: flex;
