@@ -96,13 +96,11 @@ const App = () => {
       handleUpdate(editingMember.id, {
         username: e.target.elements.username.value,
         email: e.target.elements.email.value
-        // Include more fields as necessary
       });
-      setEditingMember(null); // Reset editing state after update
+      setEditingMember(null); 
     }}>
       <input className="input-text" name="username" defaultValue={editingMember.username} required /><br />
       <input className="input-text" name="email" defaultValue={editingMember.email} required /><br />
-      {/* Include more fields as necessary */}
       <button className="btn-center-submit" type="submit">Update member</button>
     </form>
   </div>
