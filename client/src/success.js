@@ -1,10 +1,14 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import UserContext from './UserContext';
 import './app-style.css';
 
 const LoginSuccess = () => {
   const { currentUser } = useContext(UserContext);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>

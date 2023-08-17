@@ -13,6 +13,12 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.options('/login', (req, res) => {
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
+  res.sendStatus(200);
+});
+
 app.get('/', (req, res) => {
   member.getMembers() 
     .then(response => {
@@ -21,6 +27,22 @@ app.get('/', (req, res) => {
     .catch(error => {
       res.status(500).send(error);
     });
+});
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const members = await member.getMembers();
+    const matchingMember = members.find(member => member.email === email && member.password === password);
+    if (matchingMember) {
+      res.status(200).json({ success: true, user: { id: matchingMember.id, email } });
+    } else {
+      res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
 });
 
 app.post('/member', (req, res) => {

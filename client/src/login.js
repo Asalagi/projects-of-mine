@@ -7,7 +7,7 @@ import './app-style.css';
 
 function Login() {
   const { setIsLoggedIn, setCurrentUser } = useContext(UserContext);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
     const handleLogin = (userCredentials) => {
         axios.post('http://localhost:3001/login', userCredentials)
@@ -15,7 +15,7 @@ function Login() {
             if(response.data.success){
               setIsLoggedIn(true);
               setCurrentUser(response.data.user);
-              history.push(`/members/${response.data.user.id}`);
+              navigate('/success');
             } else {
               console.error(response.data.error);
             }
