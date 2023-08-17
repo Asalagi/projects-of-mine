@@ -1,14 +1,20 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import UserContext from './UserContext';
+import './app-style.css';
 
-const Account = () => {
-  const { id } = useParams(); 
+const LoginSuccess = () => {
+  const { currentUser } = useContext(UserContext);
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>
-      <h1>Welcome to your account, {id}!</h1>
+      <h2>Welcome {currentUser.username} (#{currentUser.id})! </h2>
     </div>
   );
 };
 
-export default Account;
+export default LoginSuccess;

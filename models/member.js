@@ -21,6 +21,20 @@ const getMembers = () => {
   });
 };
 
+const getMemberById = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT username FROM member WHERE id = $1', [id], (error, results) => {
+      if (error) {
+        reject(error);
+      } else if (results && results.rows && results.rows[0]) {
+        resolve(results.rows[0].username);
+      } else {
+        resolve(null);
+      }
+    });
+  });
+};
+
 const createMember = (body) => {
   const { username, password, email } = body;
   return new Promise((resolve, reject) => {
@@ -71,6 +85,7 @@ const deleteMember = (id) => {
 
 module.exports = {
   getMembers, 
+  getMemberById,
   createMember,
   updateMember,
   deleteMember,

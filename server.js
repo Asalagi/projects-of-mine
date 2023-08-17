@@ -29,13 +29,23 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/member/:id', (req, res) => {
+  member.getMemberById(req.params.id)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    });
+});
+
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const members = await member.getMembers();
     const matchingMember = members.find(member => member.email === email && member.password === password);
     if (matchingMember) {
-      res.status(200).json({ success: true, user: { id: matchingMember.id, email } });
+      res.status(200).json({ success: true, user: { id: matchingMember.id, email, username: matchingMember.username } });
     } else {
       res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
