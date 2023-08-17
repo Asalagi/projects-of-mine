@@ -6,7 +6,7 @@ const Account = () => {
 
   return (
     <div>
-      <h1>Welcome to your account, user {id}!</h1>
+      <h1>Welcome to your account, {id}!</h1>
     </div>
   );
 };

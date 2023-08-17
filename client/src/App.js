@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 import UserContext from './UserContext';
 import './app-style.css';
 
 import Register from './register';
 import Login from './login';
 import LoginSuccess from './success';
-import PrivateRoute from './privateroute';
 import Account from './account'; 
 import Members from './members';
 
@@ -31,8 +31,8 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/success" element={<LoginSuccess />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/account/:id" element={<PrivateRoute><Account /></PrivateRoute>} />
-      <Route path="/members" element={<PrivateRoute><Members /></PrivateRoute>} />
+      <Route path="/account/:id" element={currentUser ? <Account /> : <Navigate to="/login" />} />
+      <Route path="/members" element={currentUser ? <Members /> : <Navigate to="/login" />} />
     </Routes>
   </Router>
 </UserContext.Provider>
