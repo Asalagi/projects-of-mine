@@ -1,9 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserContext from './UserContext';
+import './app-style.css';
 
 function Login() {
-    let history = useHistory();
+  const { setIsLoggedIn, setCurrentUser } = useContext(UserContext);
+  const history = useNavigate();
 
     const handleLogin = (userCredentials) => {
         axios.post('http://localhost:3001/login', userCredentials)
@@ -13,7 +17,7 @@ function Login() {
               setCurrentUser(response.data.user);
               history.push(`/members/${response.data.user.id}`);
             } else {
-              console.log(response.data.error);
+              console.error(response.data.error);
             }
           })
           .catch(error => console.error(`There was an error logging in: ${error}`));
@@ -21,7 +25,7 @@ function Login() {
     
       return (
         <div><h2>You have successfully Registered Please Login</h2>
-        <div className="login-box">
+        <div className="reg-box">
           <form onSubmit={e => {
             e.preventDefault();
             handleLogin({
@@ -30,9 +34,9 @@ function Login() {
             });
           }}>
             <h2>Login</h2>
-            <input name="email" placeholder="email" required /><br />
-            <input name="password" type="password" placeholder="password" required /><br />
-            <button type="submit">Login</button>
+            <input className="input-text" name="email" placeholder="email" required /><br />
+            <input className="input-text" name="password" type="password" placeholder="password" required /><br />
+            <button className="btn-center-submit" type="submit">Login</button>
           </form>
         </div>
       </div>
