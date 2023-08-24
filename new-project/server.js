@@ -1,7 +1,10 @@
+
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3001;
+const pool = require('./config/connect-horse');
 
 app.use (bodyParser.json());
 app.use(bodyParser.urlencoded({
