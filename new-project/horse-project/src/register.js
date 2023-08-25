@@ -1,12 +1,40 @@
+import React from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function Register() {
-    // something here
+    let navigate = useNavigate();
+
+    const handleCreate = (newHorse) => {
+        axios.post('http://localhost:3001/horses', newHorse)
+        .then(response => {
+            console.log(response);
+            if (response.data.success) {
+                navigate('/horses');
+            }
+        })
+        .catch(error => console.error(`There was an error creating this horse: ${error}`));
+    };
 
     return (
         <div>
             <h1>Please fill out the form</h1>
             <div>
+            <form onSubmit={e => {
+              e.preventDefault();
+              handleCreate({
+                  name: e.target.elements.name.value,
+                  breed: e.target.elements.breed.value,
+                  month_of_birth: e.target.elements.month_of_birth.value,
+                  year_of_birth: e.target.elements.year_of_birth.value,
+                  sex: e.target.elements.sex.value,
+                  height: e.target.elements.height.value,
+                  color: e.target.elements.color.value,
+                  price: e.target.elements.price.value,
+                  notes: e.target.elements.notes.value,
+                });
+             }}>
                 <label>Horse's Name:</label>
                 <input type="text" name="name" required /><br/>
                 <label>Horse's Breed:</label>
@@ -50,7 +78,9 @@ function Register() {
                 <label>Price:</label>
                 <input type="text" name="price" required /><br/>
                 <label>Notes:</label>
-                <input type="textarea" name="notes" required /><br/>
+                <textarea name="notes" required /><br/>
+                <button type="submit">Register</button>
+                </form>
             </div>
         </div>
     )
