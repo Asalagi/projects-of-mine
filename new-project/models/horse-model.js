@@ -69,5 +69,5 @@ module.exports = {
     getHorseById,
     createHorse,
     updateHorse,
-
+    deleteHorse,
 };
