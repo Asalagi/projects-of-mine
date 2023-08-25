@@ -29,7 +29,24 @@ app.get('/horses', async (req, res) => {
 });
 
 app.get('/horses/:id', horse.getHorseById);
-app.post('/horses', horse.createHorse);
+app.post('/horses', async (req, res) => {
+  horse.createHorse(req.body)
+  .then(response => {
+    res.status(200).json({
+      success: true,
+      message: 'Registration successful',
+      member: response
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      success: false,
+      message: 'Registration failed',
+      error: error.message
+    });
+  });
+});
+
 app.put('/horses/:id', horse.updateHorse);
 app.delete('/horses/:id', horse.deleteHorse);
 

@@ -1,17 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
 
 function Register() {
-    let navigate = useNavigate();
 
     const handleCreate = (newHorse) => {
         axios.post('http://localhost:3001/horses', newHorse)
         .then(response => {
             console.log(response);
             if (response.data.success) {
-                navigate('/horses');
+                window.alert('Successfully registered!');
             }
         })
         .catch(error => console.error(`There was an error creating this horse: ${error}`));

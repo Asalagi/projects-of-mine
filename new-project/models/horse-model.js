@@ -22,26 +22,26 @@ const getHorseById = (request, response) => {
             response.json(results.rows[0]); 
         }
     });
-ƒ};
+};
 
 const createHorse = (body) => {
     const { name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes } = body;
+    console.log('Data to insert into the database:', body);
+    
     return new Promise((resolve, reject) => {
-      pool.query(
-        'INSERT INTO horses (name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-        [name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes],
-        (error, results) => {
-          if (error) {
-            reject(error);
-          } else if (results && results.rows && results.rows[0]) {
-            resolve(`A new horse has been added: ${JSON.stringify(results.rows[0])}`);
-          } else {
-            resolve("The horse was not successfully added to the database.");
-          }
-        }
-      );
+        pool.query(
+            'INSERT INTO horses (name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+            [name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes],
+            (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(results.rows[0]); 
+                }
+            }
+        );
     });
-  };
+};
 
 const updateHorse = (request, response) => {
     const id = parseInt(request.params.id)
