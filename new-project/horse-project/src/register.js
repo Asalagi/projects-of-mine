@@ -11,7 +11,7 @@ function Register() {
         .then(response => {
             console.log("Response:", response); 
             if (response.data.success) {
-                navigate(`/success?name=${newHorse.name}&id=${response.data.id}`);
+                navigate(`/success?name=${newHorse.name}`);
             }
         })
         .catch(error => console.error(`There was an error creating this horse: ${error}`));
