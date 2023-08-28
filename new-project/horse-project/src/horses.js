@@ -46,7 +46,7 @@ function RegisteredHorses() {
                      <td>{horse.month_of_bith} {horse.year_of_birth}</td>
                      <td>{horse.sex}</td>
                      <td>{horse.color}</td>
-                     <td>{horse.height}</td>
+                     <td>{horse.height}hh</td>
                      <td>{horse.price}</td>
                      <td>view page</td>
                     </tr>
