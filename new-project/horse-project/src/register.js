@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
+    const [createdHorse, setCreatedHorse] = useState(null);
 
     const handleCreate = (newHorse) => {
         axios.post('http://localhost:3001/horses', newHorse)
         .then(response => {
             console.log(response);
             if (response.data.success) {
+                setCreatedHorse(response.data); // Save the created horse data
                 navigate('/success');
             }
         })
@@ -78,7 +80,9 @@ function Register() {
                 <input type="text" name="price" required /><br/>
                 <label>Notes:</label>
                 <textarea name="notes" required /><br/>
+                <Link to={`/success?name=${createdHorse?.name}&id=${createdHorse?.id}`}>
                 <button type="submit">Register</button>
+                </Link>
                 </form>
             </div>
         </div>
