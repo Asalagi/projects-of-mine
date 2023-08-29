@@ -13,15 +13,16 @@ const getHorses = () => {
     });
 };
 
-const getHorseById = (request, response) => {
-    const id = parseInt(request.params.id);
+const getHorseById = (id) => {
+    return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM horses WHERE id = $1', [id], (error, results) => {
         if (error) {
-            response.status(500).json({ error: 'An error occurred' }); 
+            reject(error); 
         } else {
-            response.json(results.rows[0]); 
+            resolve(results.rows[0]); 
         }
     });
+ });
 };
 
 const createHorse = (body) => {

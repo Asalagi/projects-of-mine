@@ -19,6 +19,12 @@ function HorseInfo() {
     return (
         <div>
             <h2>{horse.name}</h2>
+            <p>{horse.year_of_birth} {horse.color} {horse.breed} {horse.sex}, {horse.height}hh</p>
+            <h3>Notes</h3>
+            <p>{horse.notes}</p>
+            <p>Asking {horse.price}</p>
+            Edit Horse<br/>
+           Delete Horse<br/>
         </div>
     );
 };
