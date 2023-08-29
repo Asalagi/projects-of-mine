@@ -28,7 +28,6 @@ app.get('/horses', async (req, res) => {
   }
 });
 
-app.get('/horses/:id', horse.getHorseById);
 app.post('/horses', async (req, res) => {
   horse.createHorse(req.body)
   .then(response => {
@@ -45,6 +44,21 @@ app.post('/horses', async (req, res) => {
       error: error.message
     });
   });
+});
+
+app.get('/horses/:id', async (req, res) => {
+  try {
+    const horseId = req.params.id;
+    const response = await horse.getHorseById(horseId);
+
+    if(response) {
+      res.status(200).send(response);
+    } else {
+      res.status(404).send('Horse is not found');
+    }
+  } catch (error) {
+    res.status(500).send(error)
+  }
 });
 
 app.put('/horses/:id', horse.updateHorse);

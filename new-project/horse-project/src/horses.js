@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function RegisteredHorses() {
@@ -48,7 +49,7 @@ function RegisteredHorses() {
                      <td>{horse.color}</td>
                      <td>{horse.height}hh</td>
                      <td>{horse.price}</td>
-                     <td>view page</td>
+                     <td><Link to={`/horses/${horse.id}`}>View Page</Link></td>
                     </tr>
                     ))}
                 </tbody>
