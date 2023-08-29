@@ -43,7 +43,7 @@ function RegisteredHorses() {
                     <tr key={horse.id}>
                      <td>{horse.name}</td>
                      <td>{horse.breed}</td>
-                     <td>{horse.month_of_bith} {horse.year_of_birth}</td>
+                     <td>{horse.month_of_birth} {horse.year_of_birth}</td>
                      <td>{horse.sex}</td>
                      <td>{horse.color}</td>
                      <td>{horse.height}hh</td>
