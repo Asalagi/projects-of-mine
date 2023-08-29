@@ -14,7 +14,7 @@ const getHorses = () => {
 };
 
 const getHorseById = (id) => {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM horses WHERE id = $1', [id], (error, results) => {
         if (error) {
             reject(error); 
