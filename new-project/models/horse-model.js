@@ -44,19 +44,23 @@ const createHorse = (body) => {
     });
 };
 
-const updateHorse = (request, response) => {
-    const id = parseInt(request.params.id)
-    const { name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes } = request.body
+const updateHorse = (id, updatedHorseInfo) => {
+    const { name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes } = updatedHorseInfo;
     
-    pool.query('UPDATE horses SET name = $1, breed = $2, month_of_birth = $3, year_of_birth = $4, sex = $5, height = $6, color = $7, price = $8, notes = $9 WHERE id = $10 RETURNING *',
-        [name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes, id],
-        (error, results) => {
-            if (error) {
-                response.status(500).json({ error: 'An error occurred' }); 
-            } else {
-                response.json(results.rows[0]); 
+    return new Promise((resolve, reject) => {
+        pool.query(
+            'UPDATE horses SET name = $1, breed = $2, month_of_birth = $3, year_of_birth = $4, sex = $5, height = $6, color = $7, price = $8, notes = $9 WHERE id = $10 RETURNING *',
+            [name, breed, month_of_birth, year_of_birth, sex, height, color, price, notes, id],
+            (error, results) => {
+                if (error) {
+                    console.error(error.message); 
+                    reject(error);
+                } else {
+                    resolve(results.rows[0]);
+                }
             }
-        });
+        );
+    });
 };
 
 const deleteHorse = (request, response) => {

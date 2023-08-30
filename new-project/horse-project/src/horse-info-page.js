@@ -8,14 +8,26 @@ function HorseInfo() {
     const [horse, setHorse] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
-    useEffect(() => {
-        axios.get(`http://localhost:3001/horses/${id}`)
+    const handleUpdatedHorse = (updatedHorseInfo) => {
+        axios.put(`http://localhost:3001/horses/${id}`, updatedHorseInfo)
         .then(response => {
+            console.log("Horse information was updated successfully", response.data);
             setHorse(response.data);
+            setIsEditing(false);
         })
         .catch(error => {
-            console.error('Oh no, someone ran away! We can not catch this horse', error);
+            console.log("Error has occured and horse had not been updated", error);
         });
+    }
+    
+    useEffect(() => {
+        axios.get(`http://localhost:3001/horses/${id}`)
+            .then(response => {
+                setHorse(response.data);
+            })
+            .catch(error => {
+                console.error('Oh no, someone ran away! We can not catch this horse', error);
+            });
     }, [id]);
 
     return (
@@ -26,7 +38,7 @@ function HorseInfo() {
             <p>{horse.notes}</p>
             <p>Asking {horse.price}</p>
             <button onClick={() => setIsEditing(true)}>Edit Horse</button>
-            {isEditing && <CollapseForm horse={horse} />}
+            {isEditing && <CollapseForm horse={horse} onUpdate={handleUpdatedHorse} />}
             <br />
             Delete Horse<br />
         </div>
