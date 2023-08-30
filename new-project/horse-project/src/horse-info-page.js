@@ -1,11 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import CollapseForm from './update-horse';
 
 function HorseInfo() {
     const { id } = useParams();
     const [horse, setHorse] = useState({});
+    const [isCollapseOpen, setIsCollapseOpen] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/horses/${id}`)
@@ -16,6 +17,11 @@ function HorseInfo() {
             console.error('Oh no, someone ran away! We can not catch this horse', error);
         });
     }, [id]);
+
+    const handleEditClick = () => {
+        setIsCollapseOpen(true); // Automatically expand the form when "Edit Horse" is clicked
+    };
+
     return (
         <div>
             <h2>{horse.name}</h2>
@@ -23,8 +29,10 @@ function HorseInfo() {
             <h3>Notes</h3>
             <p>{horse.notes}</p>
             <p>Asking {horse.price}</p>
-            Edit Horse<br/>
-           Delete Horse<br/>
+            <a href="#" onClick={handleEditClick}>Edit Horse</a>
+            {isCollapseOpen && <CollapseForm horse={horse} />}
+            <br />
+            Delete Horse<br />
         </div>
     );
 };

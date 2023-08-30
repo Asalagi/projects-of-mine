@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { getHorses } from '../../models/horse-model';
 
 function CollapseForm({horse, onUpdate}) {
     const [isCollapsed, setIsCollapsed] = useState(true);
@@ -41,10 +40,12 @@ function CollapseForm({horse, onUpdate}) {
             {!isCollapsed && (
                 <div>
                     <label>Name:</label>
-                    <input type="text" name="name" value={updateHorseInfo.name} onChange={handleInputChange} />
+                    <input type="text" name="name" value={updateHorse.name} onChange={handleInputChange} />
                     <button onClick={handleUpdateHorse}>Update Horse Info</button>
                 </div>
             )}
         </div>
-    )
+    );
 }
+
+export default CollapseForm;
