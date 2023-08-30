@@ -19,6 +19,16 @@ function HorseInfo() {
             console.log("Error has occured and horse had not been updated", error);
         });
     }
+
+    const handleDeleteHorse = (deleteHorse) => {
+        axios.delete(`http://localhost:3001/horses/${id}`)
+        .then(response => {
+            console.log(`Horse with ID of ${id} has been deleted successfully`);
+        })
+        .catch(error => {
+            console.log("An error has occurred")
+        })
+    }
     
     useEffect(() => {
         axios.get(`http://localhost:3001/horses/${id}`)
@@ -30,6 +40,7 @@ function HorseInfo() {
             });
     }, [id]);
 
+
     return (
         <div>
             <h2>{horse.name}</h2>
@@ -40,7 +51,7 @@ function HorseInfo() {
             <button onClick={() => setIsEditing(true)}>Edit Horse</button>
             {isEditing && <CollapseForm horse={horse} onUpdate={handleUpdatedHorse} />}
             <br />
-            Delete Horse<br />
+            <button onClick={handleDeleteHorse}>Delete Horse</button><br />
         </div>
     );
 }
