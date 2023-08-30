@@ -78,7 +78,31 @@ app.put('/horses/:id', async (req, res) => {
     }
 });
 
-app.delete('/horses/:id', horse.deleteHorse);
+app.delete('/horses/:id', async (req, res) => {
+  try {
+    const horseId = req.params.id;
+    const deletedHorse = await horse.deleteHorse(horseId);
+
+    if (deletedHorse) {
+      res.status(200).json({
+        success: true,
+        message: 'Horse was delete successfully',
+        deletedHorse,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Horse was not found',
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'An error occured when trying to delete this horse',
+      error: error.message,
+    });
+  }
+});
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);

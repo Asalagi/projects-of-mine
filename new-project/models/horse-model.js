@@ -63,16 +63,20 @@ const updateHorse = (id, updatedHorseInfo) => {
     });
 };
 
-const deleteHorse = (request, response) => {
-    const id = parseInt(request.params.id)
-
+const deleteHorse = (id) => {
+    return new Promise((resolve, reject) => {
     pool.query('DELETE FROM horses WHERE id = $1 RETURNING *', [id], (error, results) => {
         if (error) {
-            response.status(500).json({ error: 'An error occurred' }); 
+            reject(error);
         } else {
-            response.json(results.rows[0]); 
+            if(results.rowCount === 0) {
+                resolve(null);
+            } else {
+                resolve(results.rows[0]);
+            }
         }
     });
+ });
 };
 
 module.exports = {

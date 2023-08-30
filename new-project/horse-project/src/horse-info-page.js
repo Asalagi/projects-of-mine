@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import CollapseForm from './update-horse';
 
 function HorseInfo() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [horse, setHorse] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
@@ -20,14 +21,15 @@ function HorseInfo() {
         });
     }
 
-    const handleDeleteHorse = (deleteHorse) => {
+    const handleDeleteHorse = () => {
         axios.delete(`http://localhost:3001/horses/${id}`)
         .then(response => {
-            console.log(`Horse with ID of ${id} has been deleted successfully`);
+            console.log(`Horse with ID of ${id} has been deleted successfully`, response.data);
+            navigate('/delete-horse');
         })
         .catch(error => {
-            console.log("An error has occurred")
-        })
+            console.log("An error has occurred, and horse can not be deleted", error)
+        });
     }
     
     useEffect(() => {
@@ -51,7 +53,7 @@ function HorseInfo() {
             <button onClick={() => setIsEditing(true)}>Edit Horse</button>
             {isEditing && <CollapseForm horse={horse} onUpdate={handleUpdatedHorse} />}
             <br />
-            <button onClick={handleDeleteHorse}>Delete Horse</button><br />
+            <button onClick={handleDeleteHorse}>Delete Horse</button>
         </div>
     );
 }
