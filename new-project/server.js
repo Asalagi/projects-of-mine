@@ -61,7 +61,21 @@ app.get('/horses/:id', async (req, res) => {
   }
 });
 
-app.put('/horses/:id', horse.updateHorse);
+app.put('/horses/:id', async (req, res) => {
+  try {
+    const horseId = req.params.id;
+    const response = await horse.updateHorse(horseId);
+
+    if(response) {
+      res.status(200).send(response);
+    } else {
+      res.status(400).send('Horse is not found');
+    } 
+  } catch (error) {
+      res.status(500).send(error)
+    }
+});
+
 app.delete('/horses/:id', horse.deleteHorse);
 
 app.listen(port, () => {
