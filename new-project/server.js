@@ -64,7 +64,9 @@ app.get('/horses/:id', async (req, res) => {
 app.put('/horses/:id', async (req, res) => {
   try {
     const horseId = req.params.id;
-    const response = await horse.updateHorse(horseId);
+    const updatedHorseInfo = req.body;
+
+    const response = await horse.updateHorse(horseId, updatedHorseInfo);
 
     if(response) {
       res.status(200).send(response);
