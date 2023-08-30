@@ -1,8 +1,6 @@
-
 import React, { useState } from 'react';
 
-function CollapseForm({horse, onUpdate}) {
-    const [isCollapsed, setIsCollapsed] = useState(true);
+function CollapseForm({ horse, onUpdate }) {
     const [updateHorse, setUpdateHorse] = useState({
         name: horse.name,
         breed: horse.breed,
@@ -15,35 +13,25 @@ function CollapseForm({horse, onUpdate}) {
         notes: horse.notes,
     });
 
-    const handleCollapseForm = () => {
-        setIsCollapsed(!isCollapsed);
-    };
-
     const handleInputChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setUpdateHorse((prevHorse) => ({
             ...prevHorse,
-            [name]: value, 
+            [name]: value,
         }));
     };
 
-    const handleUpdateHorse = (updateHorseInfo) => {
-        onUpdate(updateHorseInfo);
-        setIsCollapsed(true);
+    const handleUpdateHorse = () => {
+        onUpdate(updateHorse);
     };
 
     return (
         <div>
-            <button onClick={handleCollapseForm}>
-                {isCollapsed ? 'Expand' : 'Collapse'}
-            </button>
-            {!isCollapsed && (
-                <div>
-                    <label>Name:</label>
-                    <input type="text" name="name" value={updateHorse.name} onChange={handleInputChange} />
-                    <button onClick={handleUpdateHorse}>Update Horse Info</button>
-                </div>
-            )}
+            <form>
+                <label>Name:</label>
+                <input type="text" name="name" value={updateHorse.name} onChange={handleInputChange} />
+                <button type="button" onClick={handleUpdateHorse}>Update Horse Info</button>
+            </form>
         </div>
     );
 }

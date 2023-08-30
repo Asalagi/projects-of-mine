@@ -6,7 +6,7 @@ import CollapseForm from './update-horse';
 function HorseInfo() {
     const { id } = useParams();
     const [horse, setHorse] = useState({});
-    const [isCollapseOpen, setIsCollapseOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/horses/${id}`)
@@ -18,10 +18,6 @@ function HorseInfo() {
         });
     }, [id]);
 
-    const handleEditClick = () => {
-        setIsCollapseOpen(true); // Automatically expand the form when "Edit Horse" is clicked
-    };
-
     return (
         <div>
             <h2>{horse.name}</h2>
@@ -29,12 +25,12 @@ function HorseInfo() {
             <h3>Notes</h3>
             <p>{horse.notes}</p>
             <p>Asking {horse.price}</p>
-            <a href="#" onClick={handleEditClick}>Edit Horse</a>
-            {isCollapseOpen && <CollapseForm horse={horse} />}
+            <button onClick={() => setIsEditing(true)}>Edit Horse</button>
+            {isEditing && <CollapseForm horse={horse} />}
             <br />
             Delete Horse<br />
         </div>
     );
-};
+}
 
 export default HorseInfo;
